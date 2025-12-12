@@ -9,7 +9,7 @@ const DataViewPage = () => {
     const [editedData, setEditedData] = useState({}); // State to hold temporary input changes
     const handleExportExcel = async () => {
         try {
-            const response = await fetch('/api/export-excel', {
+            const response = await fetch('../api/export-excel', {
                 method: 'GET', // Use GET since we are just requesting data
             });
 
@@ -60,7 +60,7 @@ const DataViewPage = () => {
                 social_science: record.social_science,
             };
 
-            const response = await fetch('/api/print-marksheet', {
+            const response = await fetch('../api/print-marksheet', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend),
@@ -114,7 +114,7 @@ const DataViewPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('/api/data-view');
+            const response = await fetch('../api/data-view');
             if (!response.ok) {
                 throw new Error('Failed to fetch data from API');
             }
@@ -153,7 +153,7 @@ const DataViewPage = () => {
 
     const handleSave = async () => {
         try {
-            const response = await fetch('/api/update-record', {
+            const response = await fetch('../api/update-record', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(editedData), // Send the entire edited object including _id

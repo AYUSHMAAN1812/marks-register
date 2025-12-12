@@ -2,7 +2,6 @@
 import { useState } from "react";
 // 🚨 Correction 1: Use 'next/navigation' for App Router
 import { useRouter, useSearchParams } from "next/navigation"; 
-
 const Dashboard = () => {
     // Initialize useRouter from 'next/navigation'
     const router = useRouter(); 
@@ -42,7 +41,7 @@ const Dashboard = () => {
         };
         
         try {
-            const response = await fetch('/api/save-json', {
+            const response = await fetch('../api/save-json', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
