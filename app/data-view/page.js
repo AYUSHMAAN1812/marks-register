@@ -7,6 +7,41 @@ const DataViewPage = () => {
     const [error, setError] = useState(null);
     const [editingId, setEditingId] = useState(null); // State to hold the _id of the record being edited
     const [editedData, setEditedData] = useState({}); // State to hold temporary input changes
+    const handleExportExcel = async () => {
+        try {
+            const response = await fetch('/api/export-excel', {
+                method: 'GET', // Use GET since we are just requesting data
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to generate Excel file: ${response.statusText}`);
+            }
+
+            // 1. Get the file buffer (Blob) from the response
+            const blob = await response.blob();
+            
+            // 2. Get the filename from the Content-Disposition header
+            const contentDisposition = response.headers.get('Content-Disposition');
+            const filenameMatch = contentDisposition && contentDisposition.match(/filename="(.+?)"/);
+            const filename = filenameMatch ? filenameMatch[1] : 'Student_Marks_Export.xlsx';
+
+            // 3. Create a temporary URL and trigger the download
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+            
+            console.log(`Successfully downloaded: ${filename}`);
+
+        } catch (error) {
+            console.error("Excel export failed:", error);
+            alert(`Error generating Excel file: ${error.message}`);
+        }
+    };
     const handlePrint = async (record) => {
         try {
             const dataToSend = {
@@ -147,13 +182,23 @@ const DataViewPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 p-8">
-            <header className="pb-6 border-b border-gray-200 mb-6">
-                <h2 className="text-3xl font-extrabold text-indigo-900">
-                    Student Data Records
-                </h2>
-                <p className="text-gray-500 mt-1">
-                    Review and edit the marks stored in the database.
-                </p>
+            <header className="flex justify-between items-center pb-6 border-b border-gray-200 mb-6"> {/* 💡 MODIFIED HEADER */}
+                <div>
+                    <h2 className="text-3xl font-extrabold text-indigo-900">
+                        Student Data Records
+                    </h2>
+                    <p className="text-gray-500 mt-1">
+                        Review, edit, and export marks stored in the database.
+                    </p>
+                </div>
+                
+                {/* 💡 NEW EXPORT BUTTON */}
+                <button 
+                    onClick={handleExportExcel} 
+                    className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg shadow-md hover:bg-green-700 transition duration-150 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                    Export to Excel (.xlsx)
+                </button>
             </header>
 
             <div className="shadow-xl overflow-hidden rounded-xl">
