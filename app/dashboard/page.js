@@ -42,7 +42,7 @@ const Dashboard = () => {
         };
         
         try {
-            const response = await fetch('/api/save-json', {
+            const response = await fetch('./api/save-json', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
