@@ -1,0 +1,18 @@
+[
+  {
+    "teacher_name": "",
+    "standard": "",
+    "section": "",
+    "title": "",
+    "max_marks": "",
+    "student_name": "John",
+    "roll_number": "34",
+    "admin_number": "1234",
+    "english": "20",
+    "hindi": "20",
+    "odia": "20",
+    "mathematics": "20",
+    "science": "20",
+    "social_science": "20"
+  }
+]
