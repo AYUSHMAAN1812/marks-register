@@ -1,8 +1,8 @@
 // lib/db.js (Corrected for Serverless Caching)
 import mongoose from "mongoose";
-import { ENV } from "./env.js";
+// import { ENV } from "./env.js";
 
-const { MONGO_URI } = ENV;
+const { MONGO_URI } = process.env.MONGO_URI;
 
 // 1. Define a global cache object to store the connection promise
 let cached = global.mongoose;
