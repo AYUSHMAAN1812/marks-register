@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 // import { ENV } from "./env.js";
 
-const { MONGO_URI } = process.env.MONGO_URI;
+const { MONGO_URI } = process.env;
 
 // 1. Define a global cache object to store the connection promise
 let cached = global.mongoose;
